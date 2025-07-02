@@ -1,0 +1,2 @@
+C:/Users/Lenovo/Desktop/travel_app/android/app/.cxx/Debug/p1k3oa2v/x86/CMakeFiles/edit_cache.dir
+C:/Users/Lenovo/Desktop/travel_app/android/app/.cxx/Debug/p1k3oa2v/x86/CMakeFiles/rebuild_cache.dir
