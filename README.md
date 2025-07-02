@@ -19,16 +19,16 @@ samples, guidance on mobile development, and a full API reference.
 Here are some screenshots of the app:
 
 ### Home Screen
-![login Screen](assets/screenshots/screenshot1.png)
+![login Screen](assets/screenshots/Screenshot1.png)
 
 ### Details Screen
-![category Screen](assets/screenshots/screenshot2.png)
+![category Screen](assets/screenshots/Screenshot2.png)
 
 ### Settings Screen
-![trips Screen](assets/screenshots/screenshot3.png)
+![trips Screen](assets/screenshots/Screenshot3.png)
 
 ### tripsdetails Screen
-![tripsdetails Screen](assets/screenshots/screenshot4.png)
+![tripsdetails Screen](assets/screenshots/Screenshot4.png)
 
 ### booking Screen
-![booking Screen](assets/screenshots/screenshot5.png)
+![booking Screen](assets/screenshots/Screenshot5.png)
