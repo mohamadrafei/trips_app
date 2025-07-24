@@ -25,6 +25,7 @@
   z-index: 1000;
   overflow-y: auto;
   transition: transform 0.3s ease;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .panel-header {
@@ -366,7 +367,18 @@
   padding: 0.75rem;
   border-radius: 8px;
   cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  font-size: 1.2rem;
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.mobile-menu-btn:hover {
+  background: #5a67d8;
+  transform: translateY(-1px);
 }
 
 .mobile-overlay {
@@ -378,6 +390,136 @@
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: 999;
+}
+
+/* Appointments Card View for Mobile */
+.appointments-grid {
+  display: none;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.appointment-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #667eea;
+  transition: all 0.3s ease;
+}
+
+.appointment-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.appointment-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.appointment-card-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin: 0;
+}
+
+.appointment-card-time {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: 0.25rem 0;
+}
+
+.appointment-card-phone {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.appointment-card-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.appointment-card-actions button {
+  padding: 0.5rem 0.75rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 36px;
+}
+
+.appointment-card .message-btn {
+  background: #3b82f6;
+  color: white;
+}
+
+.appointment-card .message-btn:hover {
+  background: #2563eb;
+}
+
+.card-messaging-section {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.card-messaging-section input[type="text"] {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  margin-bottom: 0.75rem;
+  font-size: 0.875rem;
+}
+
+.card-messaging-section .messaging-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.card-messaging-section button {
+  padding: 0.625rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.card-messaging-section .send-btn {
+  background: #10b981;
+  color: white;
+  flex: 1;
+}
+
+.card-messaging-section .send-btn:hover {
+  background: #059669;
+}
+
+.card-messaging-section .cancel-btn {
+  background: #6b7280;
+  color: white;
+}
+
+.card-messaging-section .cancel-btn:hover {
+  background: #4b5563;
 }
 
 /* MOBILE RESPONSIVE STYLES */
@@ -405,11 +547,12 @@
   }
   
   .mobile-menu-btn {
-    display: block;
+    display: flex;
   }
   
   .side-panel {
     transform: translateX(-100%);
+    width: 280px;
   }
   
   .side-panel.open {
@@ -436,20 +579,19 @@
     font-size: 1.5rem;
   }
   
-  /* Make table responsive */
+  /* Switch to card view on tablets */
+  .data-table {
+    display: none;
+  }
+  
+  .appointments-grid {
+    display: grid;
+  }
+  
+  /* Make table responsive for other sections */
   .data-table-container {
     overflow-x: auto;
     padding: 1rem;
-  }
-  
-  .data-table {
-    min-width: 600px;
-  }
-  
-  .data-table th,
-  .data-table td {
-    padding: 0.75rem 0.5rem;
-    font-size: 0.875rem;
   }
   
   /* Stack form elements */
@@ -459,17 +601,6 @@
   
   .add-appointment-form input {
     margin-bottom: 0.75rem;
-  }
-  
-  /* Adjust action buttons */
-  .action-buttons {
-    flex-wrap: wrap;
-  }
-  
-  .action-buttons button {
-    min-width: 32px;
-    height: 32px;
-    padding: 0.375rem;
   }
 }
 
@@ -506,58 +637,29 @@
     font-size: 0.875rem;
   }
   
-  /* Make table more mobile friendly */
+  /* Keep card view on mobile */
   .data-table {
-    font-size: 0.75rem;
-    min-width: 500px;
+    display: none;
   }
   
-  .data-table th,
-  .data-table td {
-    padding: 0.5rem 0.25rem;
+  .appointments-grid {
+    display: grid;
+    gap: 0.75rem;
   }
   
-  .action-buttons button {
-    min-width: 28px;
-    height: 28px;
-    padding: 0.25rem;
+  .appointment-card {
+    padding: 1rem;
   }
   
-  /* Side panel adjustments */
+  .appointment-card-name {
+    font-size: 1rem;
+  }
+  
+  /* Side panel adjustments - keep original design */
   .side-panel {
     width: 100%;
-    max-width: 300px;
-  }
-  
-  .panel-header {
-    padding: 1.5rem 1rem;
-  }
-  
-  .panel-header h2 {
-    font-size: 1.25rem;
-  }
-  
-  .doctor-avatar {
-    width: 40px;
-    height: 40px;
-    font-size: 1rem;
-  }
-  
-  .doctor-details h3 {
-    font-size: 0.875rem;
-  }
-  
-  .doctor-details p {
-    font-size: 0.75rem;
-  }
-  
-  .navigation button {
-    padding: 0.875rem 1rem;
-    font-size: 0.875rem;
-  }
-  
-  .navigation button svg {
-    font-size: 1rem;
+    max-width: 280px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   }
   
   /* View toggle mobile */
@@ -575,19 +677,6 @@
   .calendar-container {
     padding: 1rem;
     min-height: 400px;
-  }
-  
-  /* Message input mobile */
-  .data-table td input[type="text"] {
-    width: 70% !important;
-    padding: 0.5rem;
-    font-size: 0.875rem;
-  }
-  
-  .data-table td button {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.75rem;
-    margin-left: 0.25rem;
   }
 }
 

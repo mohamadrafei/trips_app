@@ -206,6 +206,68 @@ const AppointmentsList = ({
           ))}
         </tbody>
       </table>
+
+      {/* Appointments Card View for Mobile */}
+      <div className="appointments-grid">
+        {appointments.map(app => (
+          <div key={app.id} className="appointment-card">
+            <div className="appointment-card-header">
+              <div>
+                <h3 className="appointment-card-name">
+                  {app.firstName || app.fullName?.split(' ')[0] || 'N/A'} 
+                  {app.lastName || app.fullName?.split(' ')[1] ? ` ${app.lastName || app.fullName?.split(' ')[1]}` : ''}
+                </h3>
+                <p className="appointment-card-time">
+                  {app.datetime ? new Date(app.datetime).toLocaleString() : 'N/A'}
+                </p>
+                <p className="appointment-card-phone">{app.phone || 'N/A'}</p>
+              </div>
+              <StatusBadge status={app.status || 'Open'} />
+            </div>
+            
+            <div className="appointment-card-actions">
+              <AppointmentActions
+                appointment={app}
+                updateStatus={updateStatus}
+                deleteAppointment={deleteAppointment}
+              />
+              <button
+                className="message-btn"
+                onClick={() => {
+                  if (messagingId === app.id) {
+                    setMessagingId(null);
+                    setMessageText('');
+                  } else {
+                    setMessagingId(app.id);
+                  }
+                }}
+                title="Send Message"
+              >
+                <FaEnvelope /> Message
+              </button>
+            </div>
+
+            {messagingId === app.id && (
+              <div className="card-messaging-section">
+                <input
+                  type="text"
+                  placeholder="Type your message here"
+                  value={messageText}
+                  onChange={(e) => setMessageText(e.target.value)}
+                />
+                <div className="messaging-buttons">
+                  <button className="send-btn" onClick={() => handleSendMessage(app)}>
+                    Send
+                  </button>
+                  <button className="cancel-btn" onClick={() => setMessagingId(null)}>
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
