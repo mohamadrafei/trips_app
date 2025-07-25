@@ -1,0 +1,395 @@
+/* PatientStats.css - Mobile-Friendly Patient Statistics */
+
+.patient-stats-container {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+}
+
+/* Stats Cards */
+.stats-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #4299e1, #63b3ed);
+  border-radius: 12px 12px 0 0;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card.total-patients::before {
+  background: linear-gradient(90deg, #48bb78, #68d391);
+}
+
+.stat-card.upcoming-appointments::before {
+  background: linear-gradient(90deg, #ed8936, #fbb040);
+}
+
+.stat-card h3 {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #4a5568;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-value {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1a202c;
+  line-height: 1;
+}
+
+/* Bar Chart Container */
+.bar-chart-container {
+  background: #f7fafc;
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid #e2e8f0;
+}
+
+.bar-chart-container h3 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1a202c;
+  text-align: center;
+}
+
+/* Bar Chart */
+.bar-chart {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 200px;
+  gap: 0.5rem;
+  padding: 1rem 0;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  margin-top: 1rem;
+}
+
+.bar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  flex: 1;
+  min-width: 0;
+}
+
+.bar {
+  width: 100%;
+  max-width: 40px;
+  background: linear-gradient(180deg, #4299e1 0%, #63b3ed 100%);
+  border-radius: 4px 4px 0 0;
+  min-height: 4px;
+  transition: all 0.3s ease;
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+
+.bar:hover {
+  background: linear-gradient(180deg, #3182ce 0%, #4299e1 100%);
+  transform: scaleX(1.1);
+}
+
+.month-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #4a5568;
+  text-align: center;
+  width: 100%;
+}
+
+/* Loading States */
+.patient-stats-container > div:first-child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 1.125rem;
+  color: #718096;
+}
+
+.bar-chart-container > div:first-of-type {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  font-size: 1rem;
+  color: #718096;
+}
+
+/* RESPONSIVE DESIGN */
+
+/* Large tablets */
+@media (max-width: 1024px) {
+  .patient-stats-container {
+    padding: 1.25rem;
+  }
+  
+  .stats-cards {
+    gap: 1.25rem;
+  }
+  
+  .stat-card {
+    padding: 1.25rem;
+  }
+  
+  .stat-value {
+    font-size: 2.25rem;
+  }
+  
+  .bar-chart {
+    height: 180px;
+  }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+  .patient-stats-container {
+    padding: 1rem;
+    border-radius: 8px;
+  }
+  
+  .stats-cards {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .stat-card {
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  .stat-card h3 {
+    font-size: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .stat-value {
+    font-size: 2rem;
+  }
+  
+  .bar-chart-container {
+    padding: 1rem;
+  }
+  
+  .bar-chart-container h3 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .bar-chart {
+    height: 150px;
+    gap: 0.25rem;
+    padding: 0.75rem;
+  }
+  
+  .bar {
+    max-width: 30px;
+  }
+  
+  .month-label {
+    font-size: 0.7rem;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  .patient-stats-container {
+    padding: 0.75rem;
+  }
+  
+  .stats-cards {
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  
+  .stat-card {
+    padding: 0.75rem;
+  }
+  
+  .stat-card h3 {
+    font-size: 0.7rem;
+  }
+  
+  .stat-value {
+    font-size: 1.75rem;
+  }
+  
+  .bar-chart-container {
+    padding: 0.75rem;
+  }
+  
+  .bar-chart-container h3 {
+    font-size: 0.875rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .bar-chart {
+    height: 120px;
+    gap: 0.125rem;
+    padding: 0.5rem;
+  }
+  
+  .bar {
+    max-width: 20px;
+    border-radius: 2px 2px 0 0;
+  }
+  
+  .month-label {
+    font-size: 0.65rem;
+    transform: rotate(-45deg);
+    transform-origin: center;
+    margin-top: 0.25rem;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 320px) {
+  .patient-stats-container {
+    padding: 0.5rem;
+  }
+  
+  .stats-cards {
+    gap: 0.5rem;
+  }
+  
+  .stat-card {
+    padding: 0.5rem;
+  }
+  
+  .stat-value {
+    font-size: 1.5rem;
+  }
+  
+  .bar-chart {
+    height: 100px;
+  }
+  
+  .bar {
+    max-width: 16px;
+  }
+  
+  .month-label {
+    font-size: 0.6rem;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .stat-card:hover {
+    transform: none;
+  }
+  
+  .bar:hover {
+    transform: none;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .stat-card {
+    border: 2px solid #1a202c;
+  }
+  
+  .bar {
+    background: #1a202c;
+  }
+  
+  .bar:hover {
+    background: #2d3748;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .patient-stats-container {
+    background: #2d3748;
+    color: #f7fafc;
+    border-color: #4a5568;
+  }
+  
+  .stat-card {
+    background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+    border-color: #4a5568;
+  }
+  
+  .stat-card h3 {
+    color: #a0aec0;
+  }
+  
+  .stat-value {
+    color: #f7fafc;
+  }
+  
+  .bar-chart-container {
+    background: #1a202c;
+    border-color: #4a5568;
+  }
+  
+  .bar-chart-container h3 {
+    color: #f7fafc;
+  }
+  
+  .bar-chart {
+    background: #2d3748;
+    border-color: #4a5568;
+  }
+  
+  .month-label {
+    color: #a0aec0;
+  }
+  
+  .bar {
+    background: linear-gradient(180deg, #4299e1 0%, #63b3ed 100%);
+  }
+  
+  .bar:hover {
+    background: linear-gradient(180deg, #63b3ed 0%, #90cdf4 100%);
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .stat-card,
+  .bar {
+    transition: none;
+  }
+  
+  .stat-card:hover,
+  .bar:hover {
+    transform: none;
+  }
+}
