@@ -6,6 +6,14 @@ const PatientsList = ({ patients, onPatientSelect, onAddPatient }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortConfig, setSortConfig] = useState({ key: 'fullName', direction: 'asc' });
   const [showAddForm, setShowAddForm] = useState(false);
+
+  // Debug log to see what patients data we're receiving
+  React.useEffect(() => {
+    console.log("PatientsList received patients:", patients);
+    if (patients && patients.length > 0) {
+      console.log("First patient example:", patients[0]);
+    }
+  }, [patients]);
   const [newPatient, setNewPatient] = useState({
     fullName: '',
     phone: '',
@@ -184,11 +192,11 @@ const PatientsList = ({ patients, onPatientSelect, onAddPatient }) => {
                       <small className="patient-id">ID: {patient.patientId || 'N/A'}</small>
                     </td>
                     <td className="nowrap">{formatPhoneNumber(patient.phone)}</td>
-                    <td className="appointment-count">
-                      <span className={`count-badge ${getAppointmentStatusClass(patient.appointmentCount)}`}>
-                        {patient.appointmentCount || 0}
-                      </span>
-                    </td>
+                                         <td className="appointment-count">
+                       <span className={`count-badge ${getAppointmentStatusClass(patient.appointmentCount)}`}>
+                         {Number(patient.appointmentCount) || 0}
+                       </span>
+                     </td>
                     <td>
                       <button onClick={() => onPatientSelect(patient)} className="view-btn">
                         View Record
@@ -213,15 +221,15 @@ const PatientsList = ({ patients, onPatientSelect, onAddPatient }) => {
                     <div className="card-id">ID: {patient.patientId || 'N/A'}</div>
                     <div className="card-phone">{formatPhoneNumber(patient.phone)}</div>
                   </div>
-                  <span className={`count-badge ${getAppointmentStatusClass(patient.appointmentCount)}`}>
-                    {patient.appointmentCount || 0}
-                  </span>
+                                     <span className={`count-badge ${getAppointmentStatusClass(patient.appointmentCount)}`}>
+                     {Number(patient.appointmentCount) || 0}
+                   </span>
                 </div>
                 <div className="card-actions">
-                  <div className="card-appointments">
-                    <FaCalendarAlt />
-                    {patient.appointmentCount || 0} appointments
-                  </div>
+                                     <div className="card-appointments">
+                     <FaCalendarAlt />
+                     {Number(patient.appointmentCount) || 0} appointments
+                   </div>
                   <button onClick={() => onPatientSelect(patient)} className="view-btn">
                     View Record
                   </button>
@@ -254,9 +262,10 @@ const formatPhoneNumber = (phone) => {
 };
 
 const getAppointmentStatusClass = (count) => {
-  if (!count || count === 0) return 'none';
-  if (count <= 3) return 'low';
-  if (count <= 10) return 'medium';
+  const numCount = Number(count) || 0;
+  if (numCount === 0) return 'none';
+  if (numCount <= 3) return 'low';
+  if (numCount <= 10) return 'medium';
   return 'high';
 };
 

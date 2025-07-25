@@ -109,40 +109,71 @@ const AdminPanel = () => {
           ...doc.data(),
         }));
 
+        // Normalize phone numbers for consistent matching
+        const normalizePhone = (phone) => {
+          if (!phone) return '';
+          return phone.replace(/\D/g, ''); // Remove all non-digits
+        };
+
         // Create a map to count appointments per patient
         const appointmentCountMap = {};
+        
+        console.log("Processing appointments for count:", appointmentsData.length);
+        
         appointmentsData.forEach(app => {
-          const key = app.phone || app.email;
+          const normalizedPhone = normalizePhone(app.phone);
+          const email = app.email;
+          
+          // Use phone as primary key, email as fallback
+          const key = normalizedPhone || email;
+          
           if (key) {
             appointmentCountMap[key] = (appointmentCountMap[key] || 0) + 1;
+            console.log(`Appointment count for key ${key}:`, appointmentCountMap[key]);
           }
         });
 
+        console.log("Final appointment count map:", appointmentCountMap);
+
         const uniquePatients = {};
 
+        // Process patients from patients collection first
         patientsData.forEach(patient => {
-          const key = patient.phone || patient.email;
-          uniquePatients[key] = {
-            ...patient,
-            source: 'patients',
-            appointmentCount: appointmentCountMap[key] || 0
-          };
+          const normalizedPhone = normalizePhone(patient.phone);
+          const email = patient.email;
+          const key = normalizedPhone || email;
+          
+          if (key) {
+            uniquePatients[key] = {
+              ...patient,
+              source: 'patients',
+              appointmentCount: appointmentCountMap[key] || 0
+            };
+            console.log(`Patient ${patient.fullName} has ${appointmentCountMap[key] || 0} appointments`);
+          }
         });
 
+        // Process patients from appointments (who might not be in patients collection)
         appointmentsData.forEach(app => {
-          const key = app.phone || app.email;
-          if (!uniquePatients[key]) {
+          const normalizedPhone = normalizePhone(app.phone);
+          const email = app.email;
+          const key = normalizedPhone || email;
+          
+          if (key && !uniquePatients[key]) {
             uniquePatients[key] = {
-              fullName: app.fullName || `${app.firstName} ${app.lastName}`,
+              fullName: app.fullName || `${app.firstName || ''} ${app.lastName || ''}`.trim(),
               phone: app.phone,
               email: app.email,
               source: 'appointments',
-              appointmentCount: appointmentCountMap[key] || 0
+              appointmentCount: appointmentCountMap[key] || 0,
+              patientId: `APT-${key.slice(-4)}` // Generate ID from phone/email
             };
           }
         });
 
-        setPatients(Object.values(uniquePatients));
+        const finalPatients = Object.values(uniquePatients);
+        console.log("Final patients with appointment counts:", finalPatients);
+        setPatients(finalPatients);
       } catch (error) {
         console.error("Error fetching patients:", error);
       } finally {
