@@ -1,13 +1,16 @@
 {
-    "name": "travel_app",
-    "short_name": "travel_app",
+    "name": "Travel App",
+    "short_name": "TravelApp",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
-    "orientation": "portrait-primary",
+    "background_color": "#b3d9ff",
+    "theme_color": "#4a6fa5",
+    "description": "A mobile-friendly travel application.",
+    "orientation": "any",
     "prefer_related_applications": false,
+    "categories": ["travel", "lifestyle"],
+    "lang": "en-US",
+    "dir": "ltr",
     "icons": [
         {
             "src": "icons/Icon-192.png",
