@@ -112,67 +112,161 @@ const AdminPanel = () => {
         // Normalize phone numbers for consistent matching
         const normalizePhone = (phone) => {
           if (!phone) return '';
-          return phone.replace(/\D/g, ''); // Remove all non-digits
+          const cleaned = phone.replace(/\D/g, ''); // Remove all non-digits
+          // Handle international numbers - remove leading 1 if it's 11 digits
+          if (cleaned.length === 11 && cleaned.startsWith('1')) {
+            return cleaned.substring(1);
+          }
+          return cleaned;
+        };
+
+        // Create multiple possible keys for a patient/appointment
+        const createKeys = (phone, email, fullName) => {
+          const keys = [];
+          
+          if (phone) {
+            const normalized = normalizePhone(phone);
+            if (normalized) keys.push(`phone:${normalized}`);
+          }
+          
+          if (email) {
+            keys.push(`email:${email.toLowerCase()}`);
+          }
+          
+          if (fullName) {
+            const cleanName = fullName.toLowerCase().replace(/[^a-z0-9]/g, '');
+            if (cleanName) keys.push(`name:${cleanName}`);
+          }
+          
+          return keys;
         };
 
         // Create a map to count appointments per patient
         const appointmentCountMap = {};
         
-        console.log("Processing appointments for count:", appointmentsData.length);
+        console.log("🔍 Processing appointments for count:", appointmentsData.length);
+        console.log("📋 Sample appointment data:", appointmentsData.slice(0, 2));
         
-        appointmentsData.forEach(app => {
-          const normalizedPhone = normalizePhone(app.phone);
-          const email = app.email;
+        appointmentsData.forEach((app, index) => {
+          const fullName = app.fullName || `${app.firstName || ''} ${app.lastName || ''}`.trim();
+          const possibleKeys = createKeys(app.phone, app.email, fullName);
           
-          // Use phone as primary key, email as fallback
-          const key = normalizedPhone || email;
+          console.log(`📞 Processing appointment ${index + 1}:`, {
+            originalPhone: app.phone,
+            email: app.email,
+            fullName,
+            possibleKeys,
+            patientName: fullName
+          });
           
-          if (key) {
-            appointmentCountMap[key] = (appointmentCountMap[key] || 0) + 1;
-            console.log(`Appointment count for key ${key}:`, appointmentCountMap[key]);
+          if (possibleKeys.length > 0) {
+            // Use the first available key (phone has priority)
+            const primaryKey = possibleKeys[0];
+            appointmentCountMap[primaryKey] = (appointmentCountMap[primaryKey] || 0) + 1;
+            console.log(`✅ Appointment count for key "${primaryKey}":`, appointmentCountMap[primaryKey]);
+            
+            // Also map other keys to the same primary key for cross-referencing
+            possibleKeys.slice(1).forEach(altKey => {
+              appointmentCountMap[altKey] = appointmentCountMap[primaryKey];
+            });
+          } else {
+            console.log("❌ No valid key found for appointment:", app);
           }
         });
 
-        console.log("Final appointment count map:", appointmentCountMap);
+        console.log("🎯 Final appointment count map:", appointmentCountMap);
 
         const uniquePatients = {};
 
         // Process patients from patients collection first
-        patientsData.forEach(patient => {
-          const normalizedPhone = normalizePhone(patient.phone);
-          const email = patient.email;
-          const key = normalizedPhone || email;
+        console.log("👥 Processing patients from patients collection:", patientsData.length);
+        
+        patientsData.forEach((patient, index) => {
+          const possibleKeys = createKeys(patient.phone, patient.email, patient.fullName);
           
-          if (key) {
-            uniquePatients[key] = {
+          console.log(`👤 Processing patient ${index + 1}:`, {
+            name: patient.fullName,
+            originalPhone: patient.phone,
+            email: patient.email,
+            possibleKeys
+          });
+          
+          if (possibleKeys.length > 0) {
+            // Find the best matching key from appointment counts
+            let bestCount = 0;
+            let bestKey = possibleKeys[0];
+            
+            possibleKeys.forEach(key => {
+              const count = appointmentCountMap[key] || 0;
+              if (count > bestCount) {
+                bestCount = count;
+                bestKey = key;
+              }
+            });
+            
+            uniquePatients[bestKey] = {
               ...patient,
               source: 'patients',
-              appointmentCount: appointmentCountMap[key] || 0
+              appointmentCount: bestCount
             };
-            console.log(`Patient ${patient.fullName} has ${appointmentCountMap[key] || 0} appointments`);
+            
+            console.log(`✅ Patient "${patient.fullName}" has ${bestCount} appointments (key: ${bestKey})`);
+          } else {
+            console.log("❌ No valid key for patient:", patient);
           }
         });
 
         // Process patients from appointments (who might not be in patients collection)
+        console.log("📋 Processing patients from appointments who aren't in patients collection...");
+        
         appointmentsData.forEach(app => {
-          const normalizedPhone = normalizePhone(app.phone);
-          const email = app.email;
-          const key = normalizedPhone || email;
+          const fullName = app.fullName || `${app.firstName || ''} ${app.lastName || ''}`.trim();
+          const possibleKeys = createKeys(app.phone, app.email, fullName);
           
-          if (key && !uniquePatients[key]) {
-            uniquePatients[key] = {
-              fullName: app.fullName || `${app.firstName || ''} ${app.lastName || ''}`.trim(),
-              phone: app.phone,
-              email: app.email,
-              source: 'appointments',
-              appointmentCount: appointmentCountMap[key] || 0,
-              patientId: `APT-${key.slice(-4)}` // Generate ID from phone/email
-            };
+          if (possibleKeys.length > 0) {
+            const primaryKey = possibleKeys[0];
+            
+            // Check if we already have this patient
+            const existingPatient = Object.values(uniquePatients).find(p => {
+              const pKeys = createKeys(p.phone, p.email, p.fullName);
+              return pKeys.some(pk => possibleKeys.includes(pk));
+            });
+            
+            if (!existingPatient) {
+              uniquePatients[primaryKey] = {
+                fullName,
+                phone: app.phone,
+                email: app.email,
+                source: 'appointments',
+                appointmentCount: appointmentCountMap[primaryKey] || 0,
+                patientId: `APT-${primaryKey.slice(-4)}` // Generate ID from key
+              };
+              console.log(`➕ Added new patient from appointments: "${fullName}" with ${appointmentCountMap[primaryKey] || 0} appointments`);
+            }
           }
         });
 
         const finalPatients = Object.values(uniquePatients);
-        console.log("Final patients with appointment counts:", finalPatients);
+        console.log("🏁 Final patients with appointment counts:", finalPatients);
+        
+        // Debug: Show summary
+        const totalAppointments = appointmentsData.length;
+        const totalPatients = finalPatients.length;
+        const patientsWithAppointments = finalPatients.filter(p => p.appointmentCount > 0).length;
+        
+        console.log("📊 Summary:", {
+          totalAppointments,
+          totalPatients,
+          patientsWithAppointments,
+          appointmentKeys: Object.keys(appointmentCountMap),
+          patientKeys: finalPatients.map(p => createKeys(p.phone, p.email, p.fullName)[0] || 'no-key'),
+          samplePatients: finalPatients.slice(0, 3).map(p => ({
+            name: p.fullName,
+            phone: p.phone,
+            count: p.appointmentCount
+          }))
+        });
+        
         setPatients(finalPatients);
       } catch (error) {
         console.error("Error fetching patients:", error);
@@ -365,7 +459,13 @@ const AdminPanel = () => {
           ) : (
             <PatientsList 
               patients={patients} 
-              onPatientSelect={handlePatientSelect} 
+              onPatientSelect={handlePatientSelect}
+              onAddPatient={(newPatient) => {
+                console.log("Adding new patient:", newPatient);
+                // Add the patient to Firestore patients collection
+                // For now, we'll add it locally to see the counts
+                setPatients(prev => [...prev, { ...newPatient, appointmentCount: 0 }]);
+              }}
             />
           )
         ) : activeTab === 'Patient Records' ? (
