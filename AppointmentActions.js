@@ -14,27 +14,32 @@ const AppointmentActions = ({ appointment, updateStatus, deleteAppointment }) =>
     const actions = [];
     
     switch (currentStatus?.toLowerCase()) {
+      case 'pending':
       case 'open':
         actions.push(
-          { label: 'Confirm', status: 'confirmed', icon: FaCheck, color: '#10b981' },
-          { label: 'Complete', status: 'completed', icon: FaCheck, color: '#8b5cf6' }
+          { label: 'Accept', status: 'accepted', icon: FaCheck, color: '#17a2b8' },
+          { label: 'Reject', status: 'rejected', icon: FaTimes, color: '#dc3545' }
         );
         break;
+      case 'accepted':
       case 'confirmed':
-        actions.push(
-          { label: 'Complete', status: 'completed', icon: FaCheck, color: '#8b5cf6' },
-          { label: 'Reopen', status: 'open', icon: FaUndo, color: '#3b82f6' }
-        );
-        break;
       case 'completed':
         actions.push(
-          { label: 'Reopen', status: 'open', icon: FaUndo, color: '#3b82f6' }
+          { label: 'Reject', status: 'rejected', icon: FaTimes, color: '#dc3545' },
+          { label: 'Reset', status: 'pending', icon: FaUndo, color: '#ffc107' }
+        );
+        break;
+      case 'rejected':
+      case 'cancelled':
+        actions.push(
+          { label: 'Accept', status: 'accepted', icon: FaCheck, color: '#17a2b8' },
+          { label: 'Reset', status: 'pending', icon: FaUndo, color: '#ffc107' }
         );
         break;
       default:
         actions.push(
-          { label: 'Confirm', status: 'confirmed', icon: FaCheck, color: '#10b981' },
-          { label: 'Complete', status: 'completed', icon: FaCheck, color: '#8b5cf6' }
+          { label: 'Accept', status: 'accepted', icon: FaCheck, color: '#17a2b8' },
+          { label: 'Reject', status: 'rejected', icon: FaTimes, color: '#dc3545' }
         );
     }
 
