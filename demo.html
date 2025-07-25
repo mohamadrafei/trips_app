@@ -91,6 +91,7 @@
 
                     <!-- Table Actions -->
                     <div class="table-actions">
+                        <h4>Appointments (3)</h4>
                         <button class="delete-all-btn">🗑️ Delete All</button>
                     </div>
 
@@ -194,25 +195,49 @@
     </div>
 
     <script>
+        let mobileMenuOpen = false;
+
         function toggleMobileMenu() {
             const sidePanel = document.getElementById('sidePanel');
             const overlay = document.getElementById('mobileOverlay');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
             
-            sidePanel.classList.toggle('open');
-            overlay.classList.toggle('show');
+            mobileMenuOpen = !mobileMenuOpen;
+            
+            if (mobileMenuOpen) {
+                sidePanel.classList.add('open');
+                overlay.classList.add('show');
+                menuBtn.innerHTML = '✕';
+            } else {
+                sidePanel.classList.remove('open');
+                overlay.classList.remove('show');
+                menuBtn.innerHTML = '☰';
+            }
         }
 
         function closeMobileMenu() {
             const sidePanel = document.getElementById('sidePanel');
             const overlay = document.getElementById('mobileOverlay');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
             
+            mobileMenuOpen = false;
             sidePanel.classList.remove('open');
             overlay.classList.remove('show');
+            menuBtn.innerHTML = '☰';
         }
 
         // Close menu when clicking navigation items
-        document.querySelectorAll('.navigation button').forEach(button => {
-            button.addEventListener('click', closeMobileMenu);
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.navigation button').forEach(button => {
+                button.addEventListener('click', closeMobileMenu);
+            });
+        });
+
+        // Test the mobile menu on page load
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768 && mobileMenuOpen) {
+                closeMobileMenu();
+            }
         });
     </script>
 </body>

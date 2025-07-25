@@ -131,8 +131,9 @@ const AppointmentsList = ({
         </button>
       </div>
 
-      {/* Delete All Button */}
+      {/* Table Actions */}
       <div className="table-actions">
+        <h4>Appointments ({appointments.length})</h4>
         <button className="delete-all-btn" onClick={deleteAllAppointments}>
           <FaTrash style={{ marginRight: '6px' }} />
           Delete All

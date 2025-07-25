@@ -1,42 +1,51 @@
-/* AdminPanel.css - Mobile Responsive Styles */
+/* AdminPanel.css - Clean Main Design */
 
-/* Base Styles */
+/* Reset and Base Styles */
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: #f8fafc;
+  color: #1a202c;
 }
 
 /* Admin Container */
 .admin-container {
   display: flex;
   min-height: 100vh;
-  background-color: #f5f7fa;
+  background-color: #f8fafc;
 }
 
-/* Side Panel Styles */
+/* Side Panel Styles - Original Design */
 .side-panel {
   width: 280px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #2d3748;
   color: white;
-  padding: 0;
   position: fixed;
   height: 100vh;
   left: 0;
   top: 0;
   z-index: 1000;
   overflow-y: auto;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .panel-header {
   padding: 2rem 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid #4a5568;
+  background: #1a202c;
 }
 
 .panel-header h2 {
   margin: 0 0 1.5rem 0;
   font-size: 1.5rem;
-  font-weight: 600;
+  font-weight: 700;
+  color: #f7fafc;
 }
 
 .doctor-info {
@@ -48,29 +57,31 @@
 .doctor-avatar {
   width: 50px;
   height: 50px;
-  background: rgba(255, 255, 255, 0.2);
+  background: #4299e1;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: bold;
   font-size: 1.1rem;
+  color: white;
 }
 
 .doctor-details h3 {
   margin: 0;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
+  color: #f7fafc;
 }
 
 .doctor-details p {
   margin: 0.25rem 0 0 0;
-  font-size: 0.85rem;
-  opacity: 0.8;
+  font-size: 0.875rem;
+  color: #a0aec0;
 }
 
 .navigation {
-  padding: 1rem 0;
+  padding: 1.5rem 0;
 }
 
 .navigation button {
@@ -78,7 +89,7 @@
   padding: 1rem 1.5rem;
   background: none;
   border: none;
-  color: white;
+  color: #e2e8f0;
   text-align: left;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -86,15 +97,18 @@
   align-items: center;
   gap: 0.75rem;
   font-size: 1rem;
+  font-weight: 500;
 }
 
 .navigation button:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: #4a5568;
+  color: #f7fafc;
 }
 
 .navigation button.active {
-  background: rgba(255, 255, 255, 0.2);
-  border-right: 4px solid white;
+  background: #4299e1;
+  color: white;
+  border-right: 4px solid #2b6cb0;
 }
 
 .navigation button svg {
@@ -107,6 +121,7 @@
   margin-left: 280px;
   padding: 2rem;
   min-height: 100vh;
+  background: #f8fafc;
 }
 
 .content-header {
@@ -120,9 +135,9 @@
 
 .content-header h1 {
   margin: 0;
-  color: #2d3748;
-  font-size: 2rem;
-  font-weight: 600;
+  color: #1a202c;
+  font-size: 2.25rem;
+  font-weight: 700;
 }
 
 /* View Toggle */
@@ -131,7 +146,8 @@
   background: white;
   border-radius: 8px;
   padding: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
 }
 
 .view-toggle button {
@@ -141,82 +157,102 @@
   cursor: pointer;
   border-radius: 6px;
   transition: all 0.3s ease;
-  color: #64748b;
+  color: #718096;
   font-weight: 500;
+  font-size: 0.875rem;
 }
 
 .view-toggle button.active {
-  background: #667eea;
+  background: #4299e1;
   color: white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 /* Data Table Container */
 .data-table-container {
   background: white;
   border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  padding: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
 }
 
 /* Add Appointment Form */
 .add-appointment-form {
-  background: #f8fafc;
-  padding: 1.5rem;
-  border-radius: 8px;
-  margin-bottom: 2rem;
-  border: 1px solid #e2e8f0;
+  background: #f7fafc;
+  padding: 2rem;
+  border-bottom: 1px solid #e2e8f0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  align-items: end;
 }
 
 .add-appointment-form h3 {
+  grid-column: 1 / -1;
   margin: 0 0 1rem 0;
-  color: #2d3748;
-  font-size: 1.2rem;
+  color: #1a202c;
+  font-size: 1.25rem;
+  font-weight: 600;
 }
 
 .add-appointment-form input {
-  width: 100%;
-  padding: 0.75rem;
-  margin-bottom: 1rem;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  border: 1px solid #cbd5e0;
+  border-radius: 8px;
   font-size: 1rem;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
+  background: white;
 }
 
 .add-appointment-form input:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
 }
 
 .add-btn {
-  background: #10b981;
+  background: #48bb78;
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  font-weight: 500;
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  transition: background-color 0.3s ease;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  font-size: 1rem;
 }
 
 .add-btn:hover {
-  background: #059669;
+  background: #38a169;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
 }
 
 /* Table Actions */
 .table-actions {
-  margin-bottom: 1rem;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #e2e8f0;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
+  background: #f7fafc;
+}
+
+.table-actions h4 {
+  margin: 0;
+  color: #1a202c;
+  font-size: 1.125rem;
+  font-weight: 600;
 }
 
 .delete-all-btn {
-  background: #ef4444;
+  background: #f56565;
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -226,41 +262,54 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  font-size: 0.875rem;
 }
 
 .delete-all-btn:hover {
-  background: #dc2626;
+  background: #e53e3e;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(245, 101, 101, 0.3);
 }
 
-/* Data Table */
+/* Enhanced Data Table */
 .data-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
-}
-
-.data-table th,
-.data-table td {
-  padding: 1rem;
-  text-align: left;
-  border-bottom: 1px solid #e5e7eb;
 }
 
 .data-table th {
-  background: #f9fafb;
+  background: #1a202c;
+  color: white;
+  padding: 1rem 1.5rem;
+  text-align: left;
   font-weight: 600;
-  color: #374151;
   font-size: 0.875rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  border-bottom: 1px solid #2d3748;
 }
 
-.data-table tr:hover {
-  background: #f8fafc;
+.data-table td {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: middle;
 }
 
-/* Action Buttons */
+.data-table tbody tr {
+  transition: all 0.2s ease;
+}
+
+.data-table tbody tr:hover {
+  background: #f7fafc;
+  transform: translateX(2px);
+}
+
+.data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Enhanced Action Buttons */
 .action-buttons {
   display: flex;
   gap: 0.5rem;
@@ -270,7 +319,7 @@
 .action-buttons button {
   padding: 0.5rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
@@ -278,126 +327,117 @@
   justify-content: center;
   min-width: 36px;
   height: 36px;
+  font-size: 0.875rem;
+}
+
+.action-buttons button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .message-btn {
-  background: #3b82f6;
+  background: #4299e1;
   color: white;
 }
 
 .message-btn:hover {
-  background: #2563eb;
+  background: #3182ce;
 }
 
-/* Status Badge */
+/* Enhanced Status Badge */
 .status-badge {
-  padding: 0.25rem 0.75rem;
+  padding: 0.375rem 0.875rem;
   border-radius: 20px;
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.status-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
 }
 
 .status-badge.open {
-  background: #dbeafe;
-  color: #1e40af;
+  background: #bee3f8;
+  color: #2b6cb0;
 }
 
 .status-badge.confirmed {
-  background: #d1fae5;
-  color: #065f46;
+  background: #c6f6d5;
+  color: #276749;
 }
 
 .status-badge.completed {
-  background: #f3e8ff;
-  color: #6b21a8;
+  background: #e9d8fd;
+  color: #553c9a;
 }
 
 .status-badge.cancelled {
-  background: #fee2e2;
-  color: #991b1b;
-}
-
-/* Loading */
-.loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 200px;
-  font-size: 1.1rem;
-  color: #64748b;
-}
-
-/* Coming Soon */
-.coming-soon,
-.comingsoon {
-  background: white;
-  padding: 3rem;
-  border-radius: 12px;
-  text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-}
-
-.coming-soon p {
-  margin: 0;
-  color: #64748b;
-  font-size: 1.1rem;
-}
-
-/* Calendar Container */
-.calendar-container {
-  background: white;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  min-height: 600px;
+  background: #fed7d7;
+  color: #c53030;
 }
 
 /* Mobile Menu Button */
 .mobile-menu-btn {
-  display: none;
   position: fixed;
   top: 1rem;
   left: 1rem;
   z-index: 1001;
-  background: #667eea;
+  background: #4299e1;
   color: white;
   border: none;
   padding: 0.75rem;
   border-radius: 8px;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  font-size: 1.2rem;
+  box-shadow: 0 4px 12px rgba(66, 153, 225, 0.3);
+  font-size: 1.25rem;
   width: 48px;
   height: 48px;
+  display: none;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
 }
 
 .mobile-menu-btn:hover {
-  background: #5a67d8;
+  background: #3182ce;
   transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(66, 153, 225, 0.4);
 }
 
 .mobile-overlay {
-  display: none;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
   z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
 }
 
-/* Appointments Card View for Mobile */
+.mobile-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Enhanced Appointment Cards for Mobile */
 .appointments-grid {
   display: none;
   grid-template-columns: 1fr;
   gap: 1rem;
-  margin-top: 1rem;
+  padding: 1rem;
 }
 
 .appointment-card {
@@ -405,13 +445,15 @@
   border-radius: 12px;
   padding: 1.5rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border-left: 4px solid #667eea;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #4299e1;
   transition: all 0.3s ease;
 }
 
 .appointment-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border-left-color: #3182ce;
 }
 
 .appointment-card-header {
@@ -422,21 +464,22 @@
 }
 
 .appointment-card-name {
-  font-size: 1.1rem;
+  font-size: 1.125rem;
   font-weight: 600;
-  color: #2d3748;
-  margin: 0;
+  color: #1a202c;
+  margin: 0 0 0.5rem 0;
 }
 
 .appointment-card-time {
   font-size: 0.875rem;
-  color: #64748b;
-  margin: 0.25rem 0;
+  color: #4a5568;
+  margin: 0 0 0.25rem 0;
+  font-weight: 500;
 }
 
 .appointment-card-phone {
   font-size: 0.875rem;
-  color: #64748b;
+  color: #718096;
   margin: 0;
 }
 
@@ -447,7 +490,7 @@
   flex-wrap: wrap;
   margin-top: 1rem;
   padding-top: 1rem;
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid #e2e8f0;
 }
 
 .appointment-card-actions button {
@@ -465,35 +508,44 @@
 }
 
 .appointment-card .message-btn {
-  background: #3b82f6;
+  background: #4299e1;
   color: white;
 }
 
 .appointment-card .message-btn:hover {
-  background: #2563eb;
+  background: #3182ce;
+  transform: translateY(-1px);
 }
 
+/* Card Messaging Section */
 .card-messaging-section {
   margin-top: 1rem;
   padding-top: 1rem;
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid #e2e8f0;
 }
 
 .card-messaging-section input[type="text"] {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #d1d5db;
+  border: 1px solid #cbd5e0;
   border-radius: 6px;
   margin-bottom: 0.75rem;
   font-size: 0.875rem;
+  transition: border-color 0.3s ease;
 }
 
-.card-messaging-section .messaging-buttons {
+.card-messaging-section input[type="text"]:focus {
+  outline: none;
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+}
+
+.messaging-buttons {
   display: flex;
   gap: 0.5rem;
 }
 
-.card-messaging-section button {
+.messaging-buttons button {
   padding: 0.625rem 1rem;
   border: none;
   border-radius: 6px;
@@ -503,28 +555,59 @@
   transition: all 0.3s ease;
 }
 
-.card-messaging-section .send-btn {
-  background: #10b981;
+.send-btn {
+  background: #48bb78;
   color: white;
   flex: 1;
 }
 
-.card-messaging-section .send-btn:hover {
-  background: #059669;
+.send-btn:hover {
+  background: #38a169;
+  transform: translateY(-1px);
 }
 
-.card-messaging-section .cancel-btn {
-  background: #6b7280;
+.cancel-btn {
+  background: #718096;
   color: white;
 }
 
-.card-messaging-section .cancel-btn:hover {
-  background: #4b5563;
+.cancel-btn:hover {
+  background: #4a5568;
 }
 
-/* MOBILE RESPONSIVE STYLES */
+/* Loading States */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 1.125rem;
+  color: #718096;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
 
-/* Large tablets */
+/* Coming Soon */
+.coming-soon,
+.comingsoon {
+  background: white;
+  padding: 3rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+}
+
+.coming-soon p {
+  margin: 0;
+  color: #718096;
+  font-size: 1.125rem;
+}
+
+/* RESPONSIVE DESIGN */
+
+/* Large tablets and small desktops */
 @media (max-width: 1024px) {
   .side-panel {
     width: 260px;
@@ -536,31 +619,22 @@
   }
   
   .content-header h1 {
-    font-size: 1.75rem;
+    font-size: 2rem;
   }
 }
 
 /* Tablets */
 @media (max-width: 768px) {
-  .admin-container {
-    position: relative;
-  }
-  
   .mobile-menu-btn {
     display: flex;
   }
   
   .side-panel {
     transform: translateX(-100%);
-    width: 280px;
   }
   
   .side-panel.open {
     transform: translateX(0);
-  }
-  
-  .mobile-overlay.show {
-    display: block;
   }
   
   .main-content {
@@ -576,7 +650,7 @@
   }
   
   .content-header h1 {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
   }
   
   /* Switch to card view on tablets */
@@ -588,19 +662,17 @@
     display: grid;
   }
   
-  /* Make table responsive for other sections */
-  .data-table-container {
-    overflow-x: auto;
-    padding: 1rem;
-  }
-  
-  /* Stack form elements */
   .add-appointment-form {
-    padding: 1rem;
+    grid-template-columns: 1fr;
+    padding: 1.5rem;
   }
   
-  .add-appointment-form input {
-    margin-bottom: 0.75rem;
+  .view-toggle {
+    width: 100%;
+  }
+  
+  .view-toggle button {
+    flex: 1;
   }
 }
 
@@ -612,39 +684,24 @@
   }
   
   .content-header h1 {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
   }
   
   .data-table-container {
-    padding: 0.75rem;
+    border-radius: 8px;
   }
   
   .add-appointment-form {
-    padding: 0.75rem;
+    padding: 1rem;
   }
   
   .add-appointment-form h3 {
-    font-size: 1rem;
-  }
-  
-  .add-appointment-form input {
-    padding: 0.625rem;
-    font-size: 0.875rem;
-  }
-  
-  .add-btn {
-    padding: 0.625rem 1rem;
-    font-size: 0.875rem;
-  }
-  
-  /* Keep card view on mobile */
-  .data-table {
-    display: none;
+    font-size: 1.125rem;
   }
   
   .appointments-grid {
-    display: grid;
     gap: 0.75rem;
+    padding: 0.75rem;
   }
   
   .appointment-card {
@@ -655,28 +712,9 @@
     font-size: 1rem;
   }
   
-  /* Side panel adjustments - keep original design */
   .side-panel {
     width: 100%;
     max-width: 280px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  }
-  
-  /* View toggle mobile */
-  .view-toggle {
-    width: 100%;
-  }
-  
-  .view-toggle button {
-    flex: 1;
-    padding: 0.625rem;
-    font-size: 0.875rem;
-  }
-  
-  /* Calendar container mobile */
-  .calendar-container {
-    padding: 1rem;
-    min-height: 400px;
   }
 }
 
@@ -687,80 +725,99 @@
     padding-top: 3rem;
   }
   
-  .data-table-container {
+  .appointments-grid {
     padding: 0.5rem;
+  }
+  
+  .appointment-card {
+    padding: 0.75rem;
   }
   
   .add-appointment-form {
-    padding: 0.5rem;
-  }
-  
-  .data-table {
-    min-width: 400px;
-    font-size: 0.7rem;
-  }
-  
-  .data-table th,
-  .data-table td {
-    padding: 0.375rem 0.125rem;
+    padding: 0.75rem;
   }
 }
 
-/* Touch improvements for mobile */
+/* Touch device optimizations */
 @media (hover: none) and (pointer: coarse) {
   .navigation button,
   .add-btn,
   .delete-all-btn,
   .action-buttons button,
-  .view-toggle button {
+  .view-toggle button,
+  .mobile-menu-btn {
     min-height: 44px;
-  }
-  
-  .data-table td button {
-    min-height: 36px;
-    min-width: 36px;
   }
   
   .add-appointment-form input {
     min-height: 44px;
+  }
+  
+  /* Remove hover effects on touch devices */
+  .data-table tbody tr:hover {
+    transform: none;
+  }
+  
+  .appointment-card:hover {
+    transform: none;
   }
 }
 
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
+  body {
+    background-color: #1a202c;
+    color: #f7fafc;
+  }
+  
   .admin-container {
     background-color: #1a202c;
   }
   
-  .data-table-container,
-  .coming-soon,
-  .comingsoon,
-  .calendar-container {
-    background: #2d3748;
-    color: #e2e8f0;
+  .main-content {
+    background: #1a202c;
   }
   
-  .add-appointment-form {
-    background: #4a5568;
+  .data-table-container,
+  .appointment-card,
+  .coming-soon,
+  .comingsoon,
+  .loading {
+    background: #2d3748;
+    color: #f7fafc;
+    border-color: #4a5568;
+  }
+  
+  .add-appointment-form,
+  .table-actions {
+    background: #2d3748;
     border-color: #4a5568;
   }
   
   .add-appointment-form input {
-    background: #2d3748;
+    background: #1a202c;
     border-color: #4a5568;
-    color: #e2e8f0;
+    color: #f7fafc;
   }
   
   .data-table th {
-    background: #4a5568;
-    color: #e2e8f0;
+    background: #1a202c;
   }
   
-  .data-table tr:hover {
+  .data-table td {
+    border-color: #4a5568;
+  }
+  
+  .data-table tbody tr:hover {
     background: #4a5568;
   }
   
   .content-header h1 {
-    color: #e2e8f0;
+    color: #f7fafc;
+  }
+  
+  .view-toggle {
+    background: #2d3748;
+    border-color: #4a5568;
   }
 }
