@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Admin Panel Demo</title>
+    <link rel="stylesheet" href="AdminPanel.css">
+    <style>
+        /* Quick demo styles */
+        .demo-container {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .status-badge.open { background: #dbeafe; color: #1e40af; }
+        .status-badge.confirmed { background: #d1fae5; color: #065f46; }
+        .status-badge.completed { background: #f3e8ff; color: #6b21a8; }
+        .status-badge.cancelled { background: #fee2e2; color: #991b1b; }
+        
+        button {
+            border: none;
+            padding: 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="admin-container">
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                ☰
+            </button>
+
+            <!-- Mobile Overlay -->
+            <div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileMenu()"></div>
+
+            <!-- Side Panel -->
+            <div class="side-panel" id="sidePanel">
+                <div class="panel-header">
+                    <h2>Admin Panel</h2>
+                    <div class="doctor-info">
+                        <div class="doctor-avatar">DR</div>
+                        <div class="doctor-details">
+                            <h3>Dr. Abedulnour Rafie</h3>
+                            <p>Administrator</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <nav class="navigation">
+                    <button class="active">
+                        📅 Appointments
+                    </button>
+                    <button>
+                        👤 Patients
+                    </button>
+                    <button>
+                        📊 Patient Stats
+                    </button>
+                    <button>
+                        ⚙️ Settings
+                    </button>
+                    <button>
+                        🕒 Availability
+                    </button>
+                </nav>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="main-content">
+                <div class="content-header">
+                    <h1>Appointments</h1>
+                    <div class="view-toggle">
+                        <button class="active">📋 List</button>
+                        <button>📅 Calendar</button>
+                    </div>
+                </div>
+                
+                <div class="data-table-container">
+                    <!-- Add Appointment Form -->
+                    <div class="add-appointment-form">
+                        <h3>New Appointment</h3>
+                        <input type="text" placeholder="First Name">
+                        <input type="text" placeholder="Last Name">
+                        <input type="tel" placeholder="Phone Number">
+                        <input type="datetime-local">
+                        <button class="add-btn">➕ Add Appointment</button>
+                    </div>
+
+                    <!-- Table Actions -->
+                    <div class="table-actions">
+                        <h4>Appointments (3)</h4>
+                        <button class="delete-all-btn">🗑️ Delete All</button>
+                    </div>
+
+                    <!-- Desktop Table View -->
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Date & Time</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>John Smith</td>
+                                <td>+1 234-567-8900</td>
+                                <td>Dec 15, 2024, 2:00 PM</td>
+                                <td><span class="status-badge open">Open</span></td>
+                                <td class="action-buttons">
+                                    <button style="background: #10b981; color: white;">✓</button>
+                                    <button style="background: #8b5cf6; color: white;">✓</button>
+                                    <button style="background: #ef4444; color: white;">🗑️</button>
+                                    <button class="message-btn">✉️</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Jane Doe</td>
+                                <td>+1 234-567-8901</td>
+                                <td>Dec 16, 2024, 10:00 AM</td>
+                                <td><span class="status-badge confirmed">Confirmed</span></td>
+                                <td class="action-buttons">
+                                    <button style="background: #8b5cf6; color: white;">✓</button>
+                                    <button style="background: #3b82f6; color: white;">↶</button>
+                                    <button style="background: #ef4444; color: white;">🗑️</button>
+                                    <button class="message-btn">✉️</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Mobile Card View -->
+                    <div class="appointments-grid">
+                        <div class="appointment-card">
+                            <div class="appointment-card-header">
+                                <div>
+                                    <h3 class="appointment-card-name">John Smith</h3>
+                                    <p class="appointment-card-time">Dec 15, 2024, 2:00 PM</p>
+                                    <p class="appointment-card-phone">+1 234-567-8900</p>
+                                </div>
+                                <span class="status-badge open">Open</span>
+                            </div>
+                            
+                            <div class="appointment-card-actions">
+                                <button style="background: #10b981; color: white;">✓ Confirm</button>
+                                <button style="background: #8b5cf6; color: white;">✓ Complete</button>
+                                <button style="background: #ef4444; color: white;">🗑️ Delete</button>
+                                <button class="message-btn">✉️ Message</button>
+                            </div>
+                        </div>
+
+                        <div class="appointment-card">
+                            <div class="appointment-card-header">
+                                <div>
+                                    <h3 class="appointment-card-name">Jane Doe</h3>
+                                    <p class="appointment-card-time">Dec 16, 2024, 10:00 AM</p>
+                                    <p class="appointment-card-phone">+1 234-567-8901</p>
+                                </div>
+                                <span class="status-badge confirmed">Confirmed</span>
+                            </div>
+                            
+                            <div class="appointment-card-actions">
+                                <button style="background: #8b5cf6; color: white;">✓ Complete</button>
+                                <button style="background: #3b82f6; color: white;">↶ Reopen</button>
+                                <button style="background: #ef4444; color: white;">🗑️ Delete</button>
+                                <button class="message-btn">✉️ Message</button>
+                            </div>
+                        </div>
+
+                        <div class="appointment-card">
+                            <div class="appointment-card-header">
+                                <div>
+                                    <h3 class="appointment-card-name">Bob Johnson</h3>
+                                    <p class="appointment-card-time">Dec 17, 2024, 3:30 PM</p>
+                                    <p class="appointment-card-phone">+1 234-567-8902</p>
+                                </div>
+                                <span class="status-badge completed">Completed</span>
+                            </div>
+                            
+                            <div class="appointment-card-actions">
+                                <button style="background: #3b82f6; color: white;">↶ Reopen</button>
+                                <button style="background: #ef4444; color: white;">🗑️ Delete</button>
+                                <button class="message-btn">✉️ Message</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let mobileMenuOpen = false;
+
+        function toggleMobileMenu() {
+            const sidePanel = document.getElementById('sidePanel');
+            const overlay = document.getElementById('mobileOverlay');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            mobileMenuOpen = !mobileMenuOpen;
+            
+            if (mobileMenuOpen) {
+                sidePanel.classList.add('open');
+                overlay.classList.add('show');
+                menuBtn.innerHTML = '✕';
+            } else {
+                sidePanel.classList.remove('open');
+                overlay.classList.remove('show');
+                menuBtn.innerHTML = '☰';
+            }
+        }
+
+        function closeMobileMenu() {
+            const sidePanel = document.getElementById('sidePanel');
+            const overlay = document.getElementById('mobileOverlay');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            mobileMenuOpen = false;
+            sidePanel.classList.remove('open');
+            overlay.classList.remove('show');
+            menuBtn.innerHTML = '☰';
+        }
+
+        // Close menu when clicking navigation items
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.navigation button').forEach(button => {
+                button.addEventListener('click', closeMobileMenu);
+            });
+        });
+
+        // Test the mobile menu on page load
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768 && mobileMenuOpen) {
+                closeMobileMenu();
+            }
+        });
+    </script>
+</body>
+</html>
